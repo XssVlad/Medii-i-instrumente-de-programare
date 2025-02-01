@@ -1,0 +1,27 @@
+using System;
+
+namespace CoreCSharp
+{
+    class Program
+    {
+        static void Main()
+        {
+            Console.Write("Enter base: ");
+            int a = int.Parse(Console.ReadLine());
+            Console.Write("Enter exponent: ");
+            int b = int.Parse(Console.ReadLine());
+            long result = ToThePowerOf(a, b);
+            Console.WriteLine($"{a} raised to {b} is {result}");
+        }
+
+        static long ToThePowerOf(int a, int b)
+        {
+            long result = 1;
+            for (int i = 0; i < b; i++)
+            {
+                result *= a;
+            }
+            return result;
+        }
+    }
+}
