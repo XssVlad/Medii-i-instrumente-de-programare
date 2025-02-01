@@ -1,0 +1,39 @@
+using System;
+using System.Collections.Generic;
+
+namespace CollectionsDemo
+{
+    public class Employee
+    {
+        public int EmployeeId { get; set; }
+        public string EmployeeFirstName { get; set; }
+        public string EmployeeLastName { get; set; }
+        public int EmployeeAge { get; set; }
+
+        public override string ToString()
+        {
+            return $"ID: {EmployeeId}, Name: {EmployeeFirstName} {EmployeeLastName}, Age: {EmployeeAge}";
+        }
+    }
+
+    class Program
+    {
+        static void Main()
+        {
+            List<Employee> employees = new List<Employee>();
+
+            // Adding employees
+            employees.Add(new Employee { EmployeeId = 1, EmployeeFirstName = "John", EmployeeLastName = "Doe", EmployeeAge = 30 });
+            employees.Add(new Employee { EmployeeId = 2, EmployeeFirstName = "Jane", EmployeeLastName = "Smith", EmployeeAge = 25 });
+
+            // Display employees
+            Console.WriteLine("Employees:");
+            employees.ForEach(emp => Console.WriteLine(emp));
+
+            // Remove an employee
+            employees.RemoveAt(0);
+            Console.WriteLine("\nAfter removal:");
+            employees.ForEach(emp => Console.WriteLine(emp));
+        }
+    }
+}
