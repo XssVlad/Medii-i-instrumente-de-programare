@@ -1,0 +1,31 @@
+using System;
+
+namespace CoreCSharp
+{
+    class Program
+    {
+        static void Main()
+        {
+            Console.Write("Input distance (metres): ");
+            double metres = double.Parse(Console.ReadLine());
+
+            Console.Write("Input time (hours): ");
+            double hours = double.Parse(Console.ReadLine());
+            Console.Write("Input time (minutes): ");
+            double minutes = double.Parse(Console.ReadLine());
+            Console.Write("Input time (seconds): ");
+            double seconds = double.Parse(Console.ReadLine());
+
+            // Total time in seconds:
+            double totalSeconds = hours * 3600 + minutes * 60 + seconds;
+
+            double speedMps = metres / totalSeconds;
+            double speedKph = (metres / 1000) / (totalSeconds / 3600);
+            double speedMph = speedKph / 1.60934;
+
+            Console.WriteLine($"Your speed in metres/sec is {speedMps}");
+            Console.WriteLine($"Your speed in km/h is {speedKph}");
+            Console.WriteLine($"Your speed in miles/h is {speedMph}");
+        }
+    }
+}
