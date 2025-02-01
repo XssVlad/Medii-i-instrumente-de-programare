@@ -1,0 +1,29 @@
+using System;
+using System.Data;
+using System.Windows.Forms;
+
+namespace CalculatorApp
+{
+    public partial class CalculatorForm : Form
+    {
+        public CalculatorForm()
+        {
+            InitializeComponent();
+        }
+
+        private void btnCalculate_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string expression = txtExpression.Text;
+                // Use DataTable.Compute to evaluate the expression.
+                var result = new DataTable().Compute(expression, null);
+                lblResult.Text = result.ToString();
+            }
+            catch (Exception ex)
+            {
+                lblResult.Text = "Error: " + ex.Message;
+            }
+        }
+    }
+}
