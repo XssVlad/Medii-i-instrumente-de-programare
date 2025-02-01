@@ -1,0 +1,26 @@
+using System;
+
+namespace CoreCSharp
+{
+    class Program
+    {
+        static void Main()
+        {
+            Console.Write("Enter a positive integer: ");
+            int number = int.Parse(Console.ReadLine());
+            bool contains3 = ContainsDigit3(number);
+            Console.WriteLine(contains3);
+        }
+
+        static bool ContainsDigit3(int num)
+        {
+            while (num > 0)
+            {
+                if (num % 10 == 3)
+                    return true;
+                num /= 10;
+            }
+            return false;
+        }
+    }
+}
