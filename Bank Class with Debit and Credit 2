@@ -1,0 +1,41 @@
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using BankApp;
+
+namespace BankTest
+{
+    [TestClass]
+    public class BankTests
+    {
+        [TestMethod]
+        public void Debit_WithValidAmount()
+        {
+            Bank bank = new Bank("John Doe", 100m);
+            bank.Debit(50m);
+            Assert.AreEqual(50m, bank.Balance);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Debit_WhenAmountIsLessThanZero()
+        {
+            Bank bank = new Bank("John Doe", 100m);
+            bank.Debit(-10m);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void Debit_WhenAmountIsMoreThanBalance()
+        {
+            Bank bank = new Bank("John Doe", 100m);
+            bank.Debit(150m);
+        }
+
+        [TestMethod]
+        public void Credit_WithValidAmount()
+        {
+            Bank bank = new Bank("John Doe", 100m);
+            bank.Credit(50m);
+            Assert.AreEqual(150m, bank.Balance);
+        }
+    }
+}
