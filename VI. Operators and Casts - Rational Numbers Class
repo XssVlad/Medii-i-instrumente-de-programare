@@ -1,0 +1,95 @@
+using System;
+
+namespace RationalNumbers
+{
+    public class Rational : IComparable<Rational>
+    {
+        public int Numerator { get; private set; }
+        public int Denominator { get; private set; }
+
+        public Rational(int numerator, int denominator)
+        {
+            if (denominator == 0)
+                throw new ArgumentException("Denominator cannot be zero.");
+
+            // Normalize: ensure the denominator is positive.
+            if (denominator < 0)
+            {
+                numerator = -numerator;
+                denominator = -denominator;
+            }
+
+            int gcd = GCD(Math.Abs(numerator), denominator);
+            Numerator = numerator / gcd;
+            Denominator = denominator / gcd;
+        }
+
+        private int GCD(int a, int b)
+        {
+            while (b != 0)
+            {
+                int t = b;
+                b = a % b;
+                a = t;
+            }
+            return a;
+        }
+
+        public override string ToString() => $"{Numerator}/{Denominator}";
+
+        // Operator overloads
+        public static Rational operator +(Rational r1, Rational r2)
+            => new Rational(r1.Numerator * r2.Denominator + r2.Numerator * r1.Denominator,
+                            r1.Denominator * r2.Denominator);
+
+        public static Rational operator -(Rational r1, Rational r2)
+            => new Rational(r1.Numerator * r2.Denominator - r2.Numerator * r1.Denominator,
+                            r1.Denominator * r2.Denominator);
+
+        public static Rational operator *(Rational r1, Rational r2)
+            => new Rational(r1.Numerator * r2.Numerator, r1.Denominator * r2.Denominator);
+
+        public static Rational operator /(Rational r1, Rational r2)
+        {
+            if (r2.Numerator == 0)
+                throw new DivideByZeroException();
+            return new Rational(r1.Numerator * r2.Denominator, r1.Denominator * r2.Numerator);
+        }
+
+        // Comparison operators
+        public static bool operator <(Rational r1, Rational r2)
+            => r1.Numerator * r2.Denominator < r2.Numerator * r1.Denominator;
+
+        public static bool operator >(Rational r1, Rational r2)
+            => r1.Numerator * r2.Denominator > r2.Numerator * r1.Denominator;
+
+        public static bool operator <=(Rational r1, Rational r2)
+            => r1 < r2 || r1 == r2;
+
+        public static bool operator >=(Rational r1, Rational r2)
+            => r1 > r2 || r1 == r2;
+
+        public static bool operator ==(Rational r1, Rational r2)
+        {
+            if (ReferenceEquals(r1, null) && ReferenceEquals(r2, null)) return true;
+            if (ReferenceEquals(r1, null) || ReferenceEquals(r2, null)) return false;
+            return r1.Numerator == r2.Numerator && r1.Denominator == r2.Denominator;
+        }
+
+        public static bool operator !=(Rational r1, Rational r2)
+            => !(r1 == r2);
+
+        public override bool Equals(object obj)
+            => obj is Rational r && this == r;
+
+        public override int GetHashCode()
+            => Numerator.GetHashCode() ^ Denominator.GetHashCode();
+
+        public int CompareTo(Rational other)
+        {
+            if (this < other) return -1;
+            if (this > other) return 1;
+            return 0;
+        }
+    }
+}
