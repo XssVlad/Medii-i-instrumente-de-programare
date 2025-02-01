@@ -1,0 +1,26 @@
+using System;
+using System.Collections.Generic;
+
+namespace IntroExercises
+{
+    class Program
+    {
+        static void Main()
+        {
+            List<int> numbers = new List<int>();
+
+            while (true)
+            {
+                Console.Write("Enter a number: ");
+                int num = int.Parse(Console.ReadLine());
+                numbers.Add(num);
+                if (num % 100 == 0)
+                    break;
+            }
+
+            Console.WriteLine("Numbers entered:");
+            foreach (int n in numbers)
+                Console.WriteLine(n);
+        }
+    }
+}
