@@ -1,0 +1,30 @@
+using System;
+using System.Collections.Generic;
+
+namespace ArraysTuples
+{
+    class Program
+    {
+        static void Main()
+        {
+            Console.Write("Input the number of elements to be stored in the array: ");
+            int n = int.Parse(Console.ReadLine());
+            List<int> evens = new List<int>();
+            List<int> odds = new List<int>();
+
+            for (int i = 0; i < n; i++)
+            {
+                Console.Write($"element - {i} : ");
+                int val = int.Parse(Console.ReadLine());
+                if (val % 2 == 0)
+                    evens.Add(val);
+                else
+                    odds.Add(val);
+            }
+            Console.WriteLine("The Even elements are:");
+            evens.ForEach(e => Console.Write(e + " "));
+            Console.WriteLine("\nThe Odd elements are:");
+            odds.ForEach(o => Console.Write(o + " "));
+        }
+    }
+}
