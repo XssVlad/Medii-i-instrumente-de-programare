@@ -1,0 +1,55 @@
+using System;
+
+namespace ArraysTuples
+{
+    class Program
+    {
+        static void Main()
+        {
+            Console.Write("Input the size of the square matrix (less than 5): ");
+            int n = int.Parse(Console.ReadLine());
+
+            int[,] matrix1 = new int[n, n];
+            int[,] matrix2 = new int[n, n];
+
+            Console.WriteLine("Input elements in the first matrix:");
+            for (int i = 0; i < n; i++)
+                for (int j = 0; j < n; j++)
+                {
+                    Console.Write($"element - [{i}],[{j}] : ");
+                    matrix1[i, j] = int.Parse(Console.ReadLine());
+                }
+
+            Console.WriteLine("Input elements in the second matrix:");
+            for (int i = 0; i < n; i++)
+                for (int j = 0; j < n; j++)
+                {
+                    Console.Write($"element - [{i}],[{j}] : ");
+                    matrix2[i, j] = int.Parse(Console.ReadLine());
+                }
+
+            int[,] sumMatrix = new int[n, n];
+            Console.WriteLine("The First matrix is:");
+            PrintMatrix(matrix1, n);
+            Console.WriteLine("The Second matrix is:");
+            PrintMatrix(matrix2, n);
+
+            Console.WriteLine("The Addition of two matrices is:");
+            for (int i = 0; i < n; i++)
+                for (int j = 0; j < n; j++)
+                    sumMatrix[i, j] = matrix1[i, j] + matrix2[i, j];
+
+            PrintMatrix(sumMatrix, n);
+        }
+
+        static void PrintMatrix(int[,] matrix, int n)
+        {
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                    Console.Write(matrix[i, j] + " ");
+                Console.WriteLine();
+            }
+        }
+    }
+}
