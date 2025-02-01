@@ -1,0 +1,23 @@
+using System;
+
+namespace SyntaxExercises
+{
+    class Program
+    {
+        static void Main()
+        {
+            Console.Write("Enter coefficient a (non-zero): ");
+            double a = double.Parse(Console.ReadLine());
+            if (a == 0)
+            {
+                Console.WriteLine("Coefficient 'a' must be non-zero.");
+                return;
+            }
+            Console.Write("Enter coefficient b: ");
+            double b = double.Parse(Console.ReadLine());
+
+            double x = -b / a;
+            Console.WriteLine($"Solution: x = {x}");
+        }
+    }
+}
