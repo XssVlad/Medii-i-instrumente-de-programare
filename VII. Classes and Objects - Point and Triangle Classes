@@ -1,0 +1,95 @@
+using System;
+
+namespace Geometry
+{
+    public class Point
+    {
+        public double X { get; set; }
+        public double Y { get; set; }
+
+        public Point() { }
+
+        public Point(double x, double y)
+        {
+            X = x;
+            Y = y;
+        }
+
+        public Point(Point other)
+        {
+            X = other.X;
+            Y = other.Y;
+        }
+
+        public void Read()
+        {
+            Console.Write("Enter X: ");
+            X = double.Parse(Console.ReadLine());
+            Console.Write("Enter Y: ");
+            Y = double.Parse(Console.ReadLine());
+        }
+
+        public void Write()
+        {
+            Console.WriteLine($"({X}, {Y})");
+        }
+
+        public double DistanceTo(Point other)
+        {
+            return Math.Sqrt(Math.Pow(X - other.X, 2) + Math.Pow(Y - other.Y, 2));
+        }
+    }
+
+    public class Triangle
+    {
+        public Point A { get; set; }
+        public Point B { get; set; }
+        public Point C { get; set; }
+
+        public Triangle()
+        {
+            A = new Point();
+            B = new Point();
+            C = new Point();
+        }
+
+        public Triangle(Point a, Point b, Point c)
+        {
+            A = a;
+            B = b;
+            C = c;
+        }
+
+        public void Read()
+        {
+            Console.WriteLine("Enter point A:");
+            A.Read();
+            Console.WriteLine("Enter point B:");
+            B.Read();
+            Console.WriteLine("Enter point C:");
+            C.Read();
+        }
+
+        public void Write()
+        {
+            Console.Write("Point A: "); A.Write();
+            Console.Write("Point B: "); B.Write();
+            Console.Write("Point C: "); C.Write();
+        }
+
+        public double Perimeter()
+        {
+            return A.DistanceTo(B) + B.DistanceTo(C) + C.DistanceTo(A);
+        }
+
+        public double Area()
+        {
+            // Heron's formula
+            double ab = A.DistanceTo(B);
+            double bc = B.DistanceTo(C);
+            double ca = C.DistanceTo(A);
+            double s = (ab + bc + ca) / 2;
+            return Math.Sqrt(s * (s - ab) * (s - bc) * (s - ca));
+        }
+    }
+}
