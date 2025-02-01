@@ -1,0 +1,22 @@
+using System;
+using System.Text.RegularExpressions;
+
+namespace StringsRegex
+{
+    class Program
+    {
+        static void Main()
+        {
+            Console.WriteLine(DecimalDigitInformation("This is 9"));   // Expected: "Digit 9 at position 8"
+            Console.WriteLine(DecimalDigitInformation("ABCdef"));        // Expected: "No digit found!"
+        }
+
+        static string DecimalDigitInformation(string input)
+        {
+            Match m = Regex.Match(input, @"\d");
+            if (m.Success)
+                return $"Digit {m.Value} at position {m.Index}";
+            return "No digit found!";
+        }
+    }
+}
