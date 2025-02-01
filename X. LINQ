@@ -1,0 +1,163 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace LinqDemo
+{
+    // Define Person and Role classes.
+    public class Person
+    {
+        public int PersonId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public int Age { get; set; }
+        public int RoleId { get; set; }
+
+        public override string ToString() => $"{FirstName} {LastName}, Age: {Age}, RoleId: {RoleId}";
+    }
+
+    public class Role
+    {
+        public int RoleId { get; set; }
+        public string RoleDescription { get; set; }
+        public override string ToString() => $"{RoleDescription} (Id: {RoleId})";
+    }
+
+    // Define Product, Customer, Order, and OrderDetails classes.
+    public class Product
+    {
+        public int ProductId { get; set; }
+        public string Name { get; set; }
+        public decimal UnitPrice { get; set; }
+        public string Category { get; set; }
+        public override string ToString() => $"{Name}, Price: {UnitPrice}, Category: {Category}";
+    }
+
+    public class Customer
+    {
+        public int CustomerId { get; set; }
+        public string CustomerName { get; set; }
+        public string Country { get; set; }
+        public string City { get; set; }
+        public string Phone { get; set; }
+        public override string ToString() => $"{CustomerName} from {City}, {Country}";
+    }
+
+    public class Order
+    {
+        public int OrderId { get; set; }
+        public DateTime OrderDate { get; set; }
+        public int CustomerId { get; set; }
+        public override string ToString() => $"Order {OrderId} on {OrderDate.ToShortDateString()}";
+    }
+
+    public class OrderDetails
+    {
+        public int OrderId { get; set; }
+        public int ProductId { get; set; }
+        public int Quantity { get; set; }
+    }
+
+    class Program
+    {
+        static void Main()
+        {
+            // Persons and Roles
+            List<Person> persons = new List<Person>
+            {
+                new Person { PersonId=1, FirstName="Alice", LastName="Johnson", Age=25, RoleId=1 },
+                new Person { PersonId=2, FirstName="Bob", LastName="Smith", Age=17, RoleId=2 },
+                new Person { PersonId=3, FirstName="Charlie", LastName="Brown", Age=30, RoleId=1 },
+                new Person { PersonId=4, FirstName="David", LastName="Wilson", Age=45, RoleId=3 },
+                new Person { PersonId=5, FirstName="Eve", LastName="Davis", Age=22, RoleId=2 }
+            };
+
+            List<Role> roles = new List<Role>
+            {
+                new Role { RoleId=1, RoleDescription="Leader" },
+                new Role { RoleId=2, RoleDescription="Member" },
+                new Role { RoleId=3, RoleDescription="Guest" },
+                new Role { RoleId=4, RoleDescription="Admin" },
+                new Role { RoleId=5, RoleDescription="User" }
+            };
+
+            // Example queries:
+            var adults = persons.Where(p => p.Age > 18);
+            var names = persons.Select(p => p.FirstName + " " + p.LastName);
+            var role1People = persons.Where(p => p.RoleId == 1);
+            var firstTwoYoungest = persons.OrderBy(p => p.Age).Take(2);
+            var skipTwoYoungest = persons.OrderBy(p => p.Age).Skip(2);
+            var peopleWithRoles = persons.Join(roles, p => p.RoleId, r => r.RoleId,
+                (p, r) => new { p.FirstName, p.LastName, Role = r.RoleDescription });
+            var descendingAge = persons.OrderByDescending(p => p.Age);
+            var groupByRole = persons.GroupBy(p => p.RoleId);
+            var personFirstName1 = persons.FirstOrDefault(p => p.FirstName == "FirstName1");
+            int totalLeaders = persons.Join(roles, p => p.RoleId, r => r.RoleId, (p, r) => new { p, r })
+                                      .Count(x => x.r.RoleDescription == "Leader");
+            bool anyBA = persons.Any(p => (p.FirstName + " " + p.LastName).Contains("BA"));
+            var personAge60 = persons.FirstOrDefault(p => p.Age == 60);
+
+            // Output one of the query results:
+            Console.WriteLine("Adults:");
+            foreach (var a in adults)
+                Console.WriteLine(a);
+
+            // Products, Customers, Orders, and OrderDetails
+            List<Product> products = new List<Product>
+            {
+                new Product { ProductId=1, Name="Apple", UnitPrice=1.5m, Category="Food" },
+                new Product { ProductId=2, Name="Orange Juice", UnitPrice=3.0m, Category="Drink" },
+                new Product { ProductId=3, Name="Shampoo", UnitPrice=12.0m, Category="Care" },
+                new Product { ProductId=4, Name="Chocolate", UnitPrice=2.0m, Category="Food" },
+                new Product { ProductId=5, Name="Wine", UnitPrice=15.0m, Category="Drink" }
+            };
+
+            List<Customer> customers = new List<Customer>
+            {
+                new Customer { CustomerId=1, CustomerName="Customer1", Country="UK", City="London", Phone="0123 456 789" },
+                new Customer { CustomerId=2, CustomerName="Customer2", Country="USA", City="New York", Phone="0987 654 321" },
+                new Customer { CustomerId=3, CustomerName="Customer3", Country="UK", City="London", Phone="0723 456 789" }
+            };
+
+            List<Order> orders = new List<Order>
+            {
+                new Order { OrderId=1, OrderDate=new DateTime(2021, 5, 1), CustomerId=1 },
+                new Order { OrderId=2, OrderDate=new DateTime(2021, 7, 15), CustomerId=2 },
+                new Order { OrderId=3, OrderDate=new DateTime(2020, 8, 20), CustomerId=1 },
+                new Order { OrderId=4, OrderDate=new DateTime(2021, 12, 25), CustomerId=3 }
+            };
+
+            List<OrderDetails> orderDetails = new List<OrderDetails>
+            {
+                new OrderDetails { OrderId=1, ProductId=1, Quantity=10 },
+                new OrderDetails { OrderId=1, ProductId=2, Quantity=5 },
+                new OrderDetails { OrderId=2, ProductId=3, Quantity=2 },
+                new OrderDetails { OrderId=4, ProductId=5, Quantity=1 }
+            };
+
+            var expensiveProducts = products.Where(p => p.UnitPrice >= 10);
+            var productNames = products.Select(p => p.Name);
+            var productDetails = products.Where(p => p.UnitPrice >= 10)
+                                         .Select(p => new { p.Name, p.UnitPrice });
+            var top2Expensive = products.OrderByDescending(p => p.UnitPrice).Take(2);
+            var skip2Expensive = products.OrderByDescending(p => p.UnitPrice).Skip(2);
+            var customersWithOrders = customers.GroupJoin(orders,
+                c => c.CustomerId,
+                o => o.CustomerId,
+                (c, os) => new { Customer = c, Orders = os });
+            var productsOrdered = products.OrderBy(p => p.Category).ThenByDescending(p => p.UnitPrice);
+            var productsGrouped = products.GroupBy(p => p.Category);
+            var customers2021 = customers.Where(c => orders.Any(o => o.CustomerId == c.CustomerId && o.OrderDate.Year == 2021));
+            var customerPhone = customers.FirstOrDefault(c => c.Phone == "0723 456 789");
+            int londonCustomers = customers.Count(c => c.City == "London");
+            bool anyRomania = customers.Any(c => c.Country.Equals("Romania", StringComparison.OrdinalIgnoreCase));
+            var orders2021 = orders.Where(o => o.OrderDate.Year == 2021);
+            decimal totalSum2021 = (from o in orders2021
+                                    join od in orderDetails on o.OrderId equals od.OrderId
+                                    join p in products on od.ProductId equals p.ProductId
+                                    select od.Quantity * p.UnitPrice).Sum();
+
+            Console.WriteLine($"\nTotal sum of orders from 2021: {totalSum2021}");
+        }
+    }
+}
