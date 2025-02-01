@@ -1,0 +1,28 @@
+using System;
+
+namespace CoreCSharp
+{
+    class Program
+    {
+        static void Main()
+        {
+            Console.Write("Enter a string: ");
+            string input = Console.ReadLine();
+            int alphabets = 0, digits = 0, specials = 0;
+
+            foreach (char c in input)
+            {
+                if (char.IsLetter(c))
+                    alphabets++;
+                else if (char.IsDigit(c))
+                    digits++;
+                else if (!char.IsWhiteSpace(c))
+                    specials++;
+            }
+
+            Console.WriteLine($"Number of Alphabets in the string is : {alphabets}");
+            Console.WriteLine($"Number of Digits in the string is : {digits}");
+            Console.WriteLine($"Number of Special characters in the string is : {specials}");
+        }
+    }
+}
