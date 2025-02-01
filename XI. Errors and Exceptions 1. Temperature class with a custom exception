@@ -1,0 +1,42 @@
+using System;
+
+namespace ExceptionsDemo
+{
+    // Define a custom exception.
+    public class TempIsZeroException : Exception
+    {
+        public TempIsZeroException() : base("Temperature is zero!") { }
+    }
+
+    public class Temperature
+    {
+        public double Value { get; set; }
+        public Temperature(double value)
+        {
+            Value = value;
+        }
+
+        public void DisplayTemperature()
+        {
+            if (Value == 0)
+                throw new TempIsZeroException();
+            Console.WriteLine($"Temperature: {Value}");
+        }
+    }
+
+    class Program
+    {
+        static void Main()
+        {
+            try
+            {
+                Temperature temp = new Temperature(0);
+                temp.DisplayTemperature();
+            }
+            catch (TempIsZeroException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+    }
+}
