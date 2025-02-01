@@ -1,0 +1,48 @@
+using System;
+
+namespace InheritanceDemo
+{
+    public class Person
+    {
+        public string Name { get; set; }
+        public Person(string name)
+        {
+            Name = name;
+        }
+        public override string ToString() => Name;
+    }
+
+    public class Student : Person
+    {
+        public Student(string name) : base(name) { }
+        public void Study() => Console.WriteLine("Study");
+    }
+
+    public class Teacher : Person
+    {
+        public Teacher(string name) : base(name) { }
+        public void Explain() => Console.WriteLine("Explain");
+    }
+
+    class Program
+    {
+        static void Main()
+        {
+            // According to the exercise, we have three names.
+            // For example, the teacher is entered first.
+            Console.Write("Enter teacher's name: ");
+            Person teacher = new Teacher(Console.ReadLine());
+
+            Console.Write("Enter first student's name: ");
+            Person student1 = new Student(Console.ReadLine());
+
+            Console.Write("Enter second student's name: ");
+            Person student2 = new Student(Console.ReadLine());
+
+            // Execute the respective methods.
+            if (teacher is Teacher t) t.Explain();
+            if (student1 is Student s1) s1.Study();
+            if (student2 is Student s2) s2.Study();
+        }
+    }
+}
