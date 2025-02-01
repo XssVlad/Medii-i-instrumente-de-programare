@@ -1,0 +1,30 @@
+using System;
+
+namespace StringsRegex
+{
+    class Program
+    {
+        static void Main()
+        {
+            Console.WriteLine(AlmostOnlyLetters("She is nice."));   // Expected: true
+            Console.WriteLine(AlmostOnlyLetters("true 222."));        // Expected: false
+        }
+
+        static bool AlmostOnlyLetters(string input)
+        {
+            // Check that the last character is a period.
+            if (!input.EndsWith("."))
+                return false;
+
+            // Remove the final period and spaces for the letter check.
+            string content = input.Substring(0, input.Length - 1).Replace(" ", "");
+
+            foreach (char c in content)
+            {
+                if (!char.IsLetter(c))
+                    return false;
+            }
+            return true;
+        }
+    }
+}
