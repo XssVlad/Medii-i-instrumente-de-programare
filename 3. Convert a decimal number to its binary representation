@@ -1,0 +1,29 @@
+using System;
+
+namespace CoreCSharp
+{
+    class Program
+    {
+        static void Main()
+        {
+            Console.Write("Number to convert: ");
+            int number = int.Parse(Console.ReadLine());
+            string binary = ConvertToBinary(number);
+            Console.WriteLine($"Binary: {binary}");
+        }
+
+        static string ConvertToBinary(int number)
+        {
+            if (number == 0)
+                return "0";
+
+            string result = "";
+            while (number > 0)
+            {
+                result = (number % 2).ToString() + result;
+                number /= 2;
+            }
+            return result;
+        }
+    }
+}
